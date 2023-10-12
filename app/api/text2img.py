@@ -5,6 +5,7 @@ This file contains our Text2Image API
 """
 import os
 import torch
+from PIL import Image
 from typing import List
 from diffusers import DiffusionPipeline
 from dotenv import load_dotenv
@@ -19,12 +20,12 @@ class Text2Image:
             use_auth_token=os.getenv("HUGGING_FACE"),
         )
         self.pipe = self.pipe.to(self.device)
+        self.guidance_scale = 3.0
 
     def generate_mesh_from_prompt(
             self, 
             prompt: str, 
-            guidance_scale: float
-        ) -> List[torch.Tensor]:
+        ) -> List[Image.Image]:
         """
         Generate a mesh as glb from the given prompt
 
@@ -34,7 +35,7 @@ class Text2Image:
         """
         mesh = self.pipe(
             prompt,
-            guidance_scale=guidance_scale,
+            guidance_scale=self.guidance_scale,
             num_inference_steps=64,
             frame_size=256,
             output_type="mesh",).images

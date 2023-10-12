@@ -23,9 +23,9 @@ class Image2Image:
     
     def generate_mesh_from_image(
             self,
-            image: Image,
+            image: Image.Image,
             guidance_scale: float
-    ) -> List[torch.Tensor]:
+    ) -> List[Image.Image]:
         """
         Generate a mesh from the given image
 

@@ -49,7 +49,7 @@ class MeshService:
                 error_message=error,
             )
     
-    def generate_mesh_glb_from_prompt(self, prompt: str) -> io.BytesIO:
+    def generate_mesh_glb_from_prompt(self, prompt: str,) -> io.BytesIO:
         """
         After validation we call the text2image model
 
