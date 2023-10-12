@@ -18,6 +18,4 @@ def convert_mesh_to_glb(mesh: List[Image.Image], prompt: str):
     """
     glb = export_to_ply(mesh[0], f"{prompt}.glb")
     trimesh = trimesh.load(glb)
-    path = trimesh.export(f"{prompt}.glb", file_type="glb")
-    print(f"Saved to folder: {path}")
-    return path
+    return trimesh.export(f"{prompt}.glb", file_type="glb")
