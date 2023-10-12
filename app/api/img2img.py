@@ -18,7 +18,6 @@ class Image2Image:
             "openai/shap-e-img2img", 
             torch_dtype=torch.float16, 
             variant="fp16",
-            use_safetensors=True,
             use_auth_token=os.getenv("HUGGING_FACE"),
         ).to("cuda")
     

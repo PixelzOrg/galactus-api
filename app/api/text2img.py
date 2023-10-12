@@ -16,7 +16,6 @@ class Text2Image:
             "openai/shap-e", 
             torch_dtype=torch.float16, 
             variant="fp16", 
-            use_safetensors=True,
             use_auth_token=os.getenv("HUGGING_FACE"),
         )
         self.pipe = self.pipe.to(self.device)
