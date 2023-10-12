@@ -40,5 +40,5 @@ class Image2Image:
             guidance_scale=scale, # type: ignore
             num_inference_steps=inference_steps,
             frame_size=frame, # type: ignore
-            output_type="mesh",).images
+            output_type="mesh").images
         return mesh

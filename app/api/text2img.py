@@ -19,7 +19,7 @@ class Text2Image:
             variant="fp16", 
             use_auth_token=os.getenv("HUGGING_FACE"),
         )
-        self.pipe = self.pipe.to(self.device)
+        self.pipeline = self.pipe.to(self.device)
         self.guidance_scale = 15.0
 
     def generate_mesh_from_prompt(
@@ -36,10 +36,11 @@ class Text2Image:
         :return: 
         """
         print("received request")
-        mesh = self.pipe(
+        print(torch.device)
+        mesh = self.pipeline(
             prompt,
             guidance_scale=self.guidance_scale,# type: ignore
             num_inference_steps=inference_steps,
             frame_size=frame, # type: ignore
-            output_type="mesh",).images
+            output_type="mesh").images
         return mesh

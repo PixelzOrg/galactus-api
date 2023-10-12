@@ -9,7 +9,7 @@ from PIL import Image
 from typing import Any
 from diffusers.utils import export_to_gif
 from app.utils.convert import convert_mesh_to_glb
-from app.utils.reading import read_glb_file_as_bytes, read_gif_file_as_bytes
+from app.utils.reading import read_file_as_bytes, read_glb_file_as_bytes, read_gif_file_as_bytes
 from app.api.text2img import Text2Image
 from app.api.img2img import Image2Image
 from app.models.constants import (
@@ -38,8 +38,8 @@ class MeshService:
             self.validate_image(image)
             mesh = self.image2image.generate_mesh_from_image(image)
 
-            glb_bytes = read_glb_file_as_bytes(convert_mesh_to_glb(mesh, name))
-            gif_bytes = read_gif_file_as_bytes(export_to_gif(mesh[0], f"{name}.gif"))
+            glb_bytes = read_file_as_bytes(convert_mesh_to_glb(mesh, name))
+            gif_bytes = read_file_as_bytes(export_to_gif(mesh[0], f"{name}.gif"))
             return glb_bytes, gif_bytes
 
         except Exception as error:
