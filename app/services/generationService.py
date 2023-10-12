@@ -9,14 +9,13 @@ from PIL import Image
 from typing import Any
 from diffusers.utils import export_to_gif
 from app.utils.convert import convert_mesh_to_glb
-from app.utils.reading import read_file_as_bytes, read_glb_file_as_bytes, read_gif_file_as_bytes
+from app.utils.reading import read_file_as_bytes
 from app.api.text2img import Text2Image
 from app.api.img2img import Image2Image
 from app.models.constants import (
     PROMPT_LENGTH_ERROR,
     PROMPT_TYPE_ERROR
 )
-from app.models.error_responses import create_error_response
 
 class MeshService:
     """
