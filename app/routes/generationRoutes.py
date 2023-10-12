@@ -22,9 +22,10 @@ def generate_glb_from_prompt() -> Response:
     """
     try:
         prompt = request.json["prompt"]
-        buffer, gif = mesh_service.generate_mesh_glb_from_prompt(prompt)
+        mesh, gif = mesh_service.generate_mesh_glb_from_prompt(prompt)
         return Response(
-            buffer.read(),
+            mesh,
+            gif,
             mimetype="model/gltf-binary",
             headers={
                 "Content-Disposition": f'attachment;filename={prompt}.glb'
