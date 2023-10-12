@@ -10,7 +10,7 @@ import os
 from PIL import Image
 from dotenv import load_dotenv
 from diffusers import DiffusionPipeline
-
+load_dotenv()
 class Image2Image:
     def __init__(self):
         self.pipe = DiffusionPipeline.from_pretrained(
