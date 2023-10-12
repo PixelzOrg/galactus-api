@@ -5,7 +5,7 @@ services:
     container_name: galactus
     build: .
     ports:
-      - 5000
+      - 5000:5000
     env_file:
       - .env
     deploy:
