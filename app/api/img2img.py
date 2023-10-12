@@ -8,6 +8,7 @@ which is used to generate a mesh from an image
 import torch
 import os
 from PIL import Image
+from typing import List
 from dotenv import load_dotenv
 from diffusers import DiffusionPipeline
 load_dotenv()
@@ -25,7 +26,7 @@ class Image2Image:
             self,
             image: Image,
             guidance_scale: float
-    ) -> torch.Tensor:
+    ) -> List[torch.Tensor]:
         """
         Generate a mesh from the given image
 

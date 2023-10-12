@@ -5,6 +5,7 @@ This file contains our Text2Image API
 """
 import os
 import torch
+from typing import List
 from diffusers import DiffusionPipeline
 from dotenv import load_dotenv
 load_dotenv()
@@ -24,7 +25,7 @@ class Text2Image:
             self, 
             prompt: str, 
             guidance_scale: float
-        ) -> torch.Tensor:
+        ) -> List[torch.Tensor]:
         """
         Generate a mesh as glb from the given prompt
 

@@ -8,14 +8,15 @@ import io
 from PIL import Image
 from typing import Any
 from diffusers.utils import export_to_gif
+from app.utils.convert import convert_mesh_to_glb
+from app.utils.reading import read_glb_file_as_bytes, read_gif_file_as_bytes
 from app.api.text2img import Text2Image
 from app.api.img2img import Image2Image
 from app.models.constants import (
-    SUCCESSFUL_GENERATION,
-    FAILED_GENERATION,
     PROMPT_LENGTH_ERROR,
     PROMPT_TYPE_ERROR
 )
+from app.models.error_responses import create_error_response
 
 class MeshService:
     """
@@ -26,7 +27,7 @@ class MeshService:
         self.text2image = Text2Image()
         self.image2image = Image2Image()
 
-    def generate_mesh_glb_from_image(self, image: Image) -> io.BytesIO:
+    def generate_mesh_glb_from_image(self, name: str, image: Image) -> io.BytesIO:
         """
         After validation we call the image2image model
 
@@ -36,12 +37,17 @@ class MeshService:
         try:
             self.validate_image(image)
             mesh = self.image2image.generate_mesh_from_image(image)
-            gif = export_to_gif(mesh[0], "fire.gif")
-            return mesh, gif
+
+            glb_bytes = read_glb_file_as_bytes(convert_mesh_to_glb(mesh, name))
+            gif_bytes = read_gif_file_as_bytes(export_to_gif(mesh[0], f"{name}.gif"))
+            return glb_bytes, gif_bytes
 
         except Exception as error:
             # TODO: Add json response to client
-            raise error
+            raise create_error_response(
+                method_name=self.generate_mesh_glb_from_image.__name__,
+                error_message=error,
+            )
     
     def generate_mesh_glb_from_prompt(self, prompt: str) -> io.BytesIO:
         """
@@ -53,12 +59,17 @@ class MeshService:
         try:
             self.validate_prompt(prompt)
             mesh = self.text2image.generate_mesh_from_prompt(prompt)
-            gif = export_to_gif(mesh[0], f"{prompt}.gif")
-            return mesh, gif
+
+            glb_bytes = read_glb_file_as_bytes(convert_mesh_to_glb(mesh, prompt))
+            gif_bytes = read_gif_file_as_bytes(export_to_gif(mesh[0], f"{prompt}.gif"))
+            return glb_bytes, gif_bytes
         
         except Exception as error:
             # TODO: Add json response to client
-            raise error
+            raise create_error_response(
+                method_name=self.generate_mesh_glb_from_prompt.__name__,
+                error_message=error,
+            )
         
     def validate_image(self, image: Image) -> None:
         """
