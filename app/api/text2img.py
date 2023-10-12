@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 class Text2Image:
     def __init__(self):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda")
         self.pipe = DiffusionPipeline.from_pretrained(
             "openai/shap-e", 
             torch_dtype=torch.float16, 
