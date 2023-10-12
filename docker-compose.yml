@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  galactus:
+    container_name: galactus
+    build: .
+    ports:
+      - 5000
+    env_file:
+      - .env
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              count: 1
+              capabilities: [gpu]
