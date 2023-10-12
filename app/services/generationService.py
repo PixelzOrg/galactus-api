@@ -45,8 +45,8 @@ class MeshService:
         except Exception as error:
             # TODO: Add json response to client
             raise create_error_response(
-                method_name=self.generate_mesh_glb_from_image.__name__,
-                error_message=error,
+                method_name="generate_mesh_glb_from_image",
+                error_message=str(error),
             )
     
     def generate_mesh_glb_from_prompt(self, prompt: str,) -> io.BytesIO:

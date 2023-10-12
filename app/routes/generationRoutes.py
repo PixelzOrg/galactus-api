@@ -62,23 +62,29 @@ def generate_mesh_from_image() -> Response:
     """
     try:
         prompt = request.json["prompt"]
-        glb_bytes, gif_bytes = mesh_service.generate_mesh_glb_from_image(prompt)
-        return json.dumps(
-            GenerationResponse(
-                status=constants.SUCCESSFUL_GENERATION,
-                glb_filename=f"{prompt}.glb",
-                glb_content_type="model/gltf-binary",
-                glb_bytes=glb_bytes,
-                gif_filename=f"{prompt}.gif",
-                gif_content_type="image/gif",
-                gif_bytes=gif_bytes
-            ).__dict__, 
-            indent=4
+        image = request.json["image"]
+        glb_bytes, gif_bytes = mesh_service.generate_mesh_glb_from_image(image, prompt)
+
+        return Response(
+            json.dumps(
+                GenerationResponse(
+                  status=constants.SUCCESSFUL_GENERATION,
+                  glb_filename=f"{prompt}.glb",
+                  glb_content_type="model/gltf-binary",
+                  glb_bytes=glb_bytes,
+                  gif_filename=f"{prompt}.gif",
+                  gif_content_type="image/gif",
+                  gif_bytes=gif_bytes
+                ).__dict__, 
+              indent=4
+            ),
+          mimetype="application/json",
+          status=200
         )
     
     except Exception as error:
         return Response(
-            error,
+            str(error),
             mimetype="application/json",
             status=500
         )
