@@ -20,11 +20,13 @@ class Text2Image:
             use_auth_token=os.getenv("HUGGING_FACE"),
         )
         self.pipe = self.pipe.to(self.device)
-        self.guidance_scale = 3.0
+        self.guidance_scale = 15.0
 
     def generate_mesh_from_prompt(
             self, 
             prompt: str, 
+            frame: int = 256,
+            inference_steps: int = 64,
         ) -> List[Image.Image]:
         """
         Generate a mesh as glb from the given prompt
@@ -33,10 +35,11 @@ class Text2Image:
         :param guidance_scale (float): The amount of guidance to use
         :return: 
         """
+        print("received request")
         mesh = self.pipe(
             prompt,
-            guidance_scale=self.guidance_scale,
-            num_inference_steps=64,
-            frame_size=256,
+            guidance_scale=self.guidance_scale,# type: ignore
+            num_inference_steps=inference_steps,
+            frame_size=frame, # type: ignore
             output_type="mesh",).images
         return mesh

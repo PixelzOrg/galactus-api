@@ -27,7 +27,7 @@ class MeshService:
         self.text2image = Text2Image()
         self.image2image = Image2Image()
 
-    def generate_mesh_glb_from_image(self, name: str, image: Image) -> io.BytesIO:
+    def generate_mesh_glb_from_image(self, name: str, image: Image.Image) -> io.BytesIO:
         """
         After validation we call the image2image model
 
@@ -44,10 +44,7 @@ class MeshService:
 
         except Exception as error:
             # TODO: Add json response to client
-            raise create_error_response(
-                method_name="generate_mesh_glb_from_image",
-                error_message=str(error),
-            )
+            raise error
     
     def generate_mesh_glb_from_prompt(self, prompt: str,) -> io.BytesIO:
         """
@@ -58,6 +55,7 @@ class MeshService:
         """
         try:
             self.validate_prompt(prompt)
+            print("validated")
             mesh = self.text2image.generate_mesh_from_prompt(prompt)
 
             glb_bytes = read_glb_file_as_bytes(convert_mesh_to_glb(mesh, prompt))
@@ -66,12 +64,9 @@ class MeshService:
         
         except Exception as error:
             # TODO: Add json response to client
-            raise create_error_response(
-                method_name=self.generate_mesh_glb_from_prompt.__name__,
-                error_message=error,
-            )
+            raise error
         
-    def validate_image(self, image: Image) -> None:
+    def validate_image(self, image: Image.Image) -> None:
         """
         We need to validate the image 
         before we can generate a mesh from it.

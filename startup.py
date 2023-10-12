@@ -8,5 +8,5 @@ if __name__ == '__main__':
         PORT = 5000
     else:
         PORT = os.environ.get('PORT')
-        
-    app.run(host='0.0.0.0', port=PORT)
+
+    app.run(host='0.0.0.0', port=PORT) # type: ignore

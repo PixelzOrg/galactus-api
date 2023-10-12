@@ -24,7 +24,9 @@ class Image2Image:
     def generate_mesh_from_image(
             self,
             image: Image.Image,
-            guidance_scale: float
+            scale: float = 15.0,
+            frame: int = 256,
+            inference_steps: int = 64,
     ) -> List[Image.Image]:
         """
         Generate a mesh from the given image
@@ -35,8 +37,8 @@ class Image2Image:
         """
         mesh = self.pipe(
             image,
-            guidance_scale=guidance_scale,
-            num_inference_steps=64,
-            frame_size=256,
+            guidance_scale=scale, # type: ignore
+            num_inference_steps=inference_steps,
+            frame_size=frame, # type: ignore
             output_type="mesh",).images
         return mesh

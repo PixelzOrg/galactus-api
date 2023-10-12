@@ -23,6 +23,7 @@ def generate_glb_from_prompt() -> Response:
     :raises: 500 error if an error occurs
     """
     try:
+        print("received request")
         prompt = request.json["prompt"]
         glb_bytes, gif_bytes = mesh_service.generate_mesh_glb_from_prompt(prompt)
 
