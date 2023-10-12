@@ -6,7 +6,9 @@ which is used to generate a mesh from an image
 """
 
 import torch
+import os
 from PIL import Image
+from dotenv import load_dotenv
 from diffusers import DiffusionPipeline
 
 class Image2Image:
@@ -14,7 +16,9 @@ class Image2Image:
         self.pipe = DiffusionPipeline.from_pretrained(
             "openai/shap-e-img2img", 
             torch_dtype=torch.float16, 
-            variant="fp16", 
+            variant="fp16",
+            use_safetensors=True,
+            use_auth_token=os.getenv("HUGGING_FACE"),
         ).to("cuda")
     
     def generate_mesh_from_image(
