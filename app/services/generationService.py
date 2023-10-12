@@ -57,8 +57,8 @@ class MeshService:
             print("validated")
             mesh = self.text2image.generate_mesh_from_prompt(prompt)
 
-            glb_bytes = read_glb_file_as_bytes(convert_mesh_to_glb(mesh, prompt))
-            gif_bytes = read_gif_file_as_bytes(export_to_gif(mesh[0], f"{prompt}.gif"))
+            glb_bytes = read_file_as_bytes(convert_mesh_to_glb(mesh, prompt))
+            gif_bytes = read_file_as_bytes(export_to_gif(mesh[0], f"{prompt}.gif"))
             return glb_bytes, gif_bytes
         
         except Exception as error:

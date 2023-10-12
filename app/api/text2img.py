@@ -36,7 +36,6 @@ class Text2Image:
         :return: 
         """
         print("received request")
-        print(torch.device)
         mesh = self.pipeline(
             prompt,
             guidance_scale=self.guidance_scale,# type: ignore
